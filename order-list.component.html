@@ -1,0 +1,41 @@
+<div class="order-management-container">
+  <div class="header">
+    <h2>Gerenciamento de Pedidos</h2>
+    <button class="add-btn" (click)="openAddModal()">Adicionar Pedido</button>
+  </div>
+  <app-add-order-modal
+    [isOpen]="isModalOpen"
+    [orderToEdit]="currentOrder"
+    (closeModal)="isModalOpen = false"
+    (orderSubmit)="handleOrderSubmit($event)"></app-add-order-modal>
+
+  <div class="order-list">
+    <h3>Pedidos Existentes</h3>
+    <p *ngIf="orders.length === 0">Nenhum pedido encontrado.</p>
+    <div class="order-cards-container">
+      <div class="order-card" *ngFor="let order of orders">
+        <div class="card-header">
+          <div class="card-title">
+            <h4>Pedido #{{ order.id }}</h4>
+            <span class="status status-{{ order.status | lowercase }}">{{ order.status }}</span>
+          </div>
+          <div class="card-actions">
+            <button class="edit-btn" (click)="openEditModal(order)">Editar</button>
+            <button class="delete-btn" (click)="deleteOrder(order.id)">Excluir</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item"><strong>Cliente:</strong><span>{{ order.customerName }}</span></div>
+            <div class="info-item"><strong>CPF:</strong><span>{{ order.customerCpf }}</span></div>
+            <div class="info-item"><strong>Serviço:</strong><span>{{ order.serviceName }}</span></div>
+            <div class="info-item"><strong>Total:</strong><span>{{ order.totalPrice | currency:'BRL' }}</span></div>
+            <div class="info-item"><strong>Email:</strong><span>{{ order.customerEmail || 'N/A' }}</span></div>
+            <div class="info-item"><strong>Telefone:</strong><span>{{ order.customerPhone || 'N/A' }}</span></div>
+            <div class="info-item"><strong>Data:</strong><span>{{ order.orderDate | date:'short' }}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

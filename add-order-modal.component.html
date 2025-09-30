@@ -1,0 +1,43 @@
+<div class="modal-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>{{ isEditMode ? 'Editar Pedido' : 'Adicionar Novo Pedido' }}</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="customerName">Nome do Cliente</label>
+        <input type="text" id="customerName" [(ngModel)]="model.customerName" name="customerName" required />
+      </div>
+      <div class="form-group">
+        <label for="customerCpf">CPF</label>
+        <input type="text" id="customerCpf" [(ngModel)]="model.customerCpf" name="customerCpf" required />
+      </div>
+      <div class="form-group">
+        <label for="customerPhone">Telefone</label>
+        <input type="tel" id="customerPhone" [(ngModel)]="model.customerPhone" name="customerPhone" />
+      </div>
+      <div class="form-group">
+        <label for="customerEmail">Email</label>
+        <input type="email" id="customerEmail" [(ngModel)]="model.customerEmail" name="customerEmail" />
+      </div>
+      <div class="form-group">
+        <label for="serviceName">Serviço</label>
+        <select id="serviceName" [(ngModel)]="model.serviceName" name="serviceName" required>
+          <option value="" disabled>Selecione um serviço</option>
+          <option *ngFor="let service of services" [value]="service">{{ service }}</option>
+        </select>
+      </div>
+
+      <div class="form-group" *ngIf="isEditMode">
+        <label for="status">Status</label>
+        <select id="status" [(ngModel)]="model.status" name="status" required>
+          <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+        </select>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" (click)="onClose()">Cancelar</button>
+        <button type="submit" class="btn-primary">{{ isEditMode ? 'Salvar Alterações' : 'Adicionar Pedido' }}</button>
+      </div>
+    </form>
+    <button class="close-button" (click)="onClose()">×</button>
+  </div>
+</div>
