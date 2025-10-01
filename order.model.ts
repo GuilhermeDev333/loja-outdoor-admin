@@ -6,6 +6,9 @@ export interface Order {
   customerEmail: string;
   serviceName: string;
   totalPrice: number;
-  status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled' | 'On Hold';
+  status: 'Pendente' | 'Em Processo' | 'Finalizado';
   orderDate: Date;
+  height?: number | null;
+  width?: number | null;
+  length?: number | null;
 }

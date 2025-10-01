@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Order } from './order.model';
 
 @Component({
@@ -20,7 +20,6 @@ export class AddOrderModalComponent implements OnChanges {
   model: Partial<Order> = {};
 
   services = ['Outdoor', 'Banner', 'Faixa', 'Adesivo', 'Placa'];
-  statuses: Order['status'][] = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled', 'On Hold'];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isOpen'] && this.isOpen) {
@@ -38,9 +37,8 @@ export class AddOrderModalComponent implements OnChanges {
     this.closeModal.emit();
   }
 
-  onSubmit() {
-    if (!this.model.customerName || !this.model.customerCpf || !this.model.serviceName) {
-      alert('Por favor, preencha Nome, CPF e Serviço.');
+  onSubmit(form: NgForm) {
+    if (form.invalid) {
       return;
     }
 
@@ -55,7 +53,11 @@ export class AddOrderModalComponent implements OnChanges {
       customerPhone: '',
       customerEmail: '',
       serviceName: '',
-      status: 'Pending'
+      status: 'Pendente',
+      totalPrice: 0,
+      height: null,
+      width: null,
+      length: null,
     };
   }
 }

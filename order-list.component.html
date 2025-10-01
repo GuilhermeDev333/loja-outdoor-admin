@@ -8,6 +8,12 @@
     [orderToEdit]="currentOrder"
     (closeModal)="isModalOpen = false"
     (orderSubmit)="handleOrderSubmit($event)"></app-add-order-modal>
+  <app-confirmation-modal
+    [isOpen]="isConfirmModalOpen"
+    [message]="confirmMessage"
+    (confirm)="confirmDelete()"
+    (cancel)="closeConfirmModal()">
+  </app-confirmation-modal>
 
   <div class="order-list">
     <h3>Pedidos Existentes</h3>
@@ -17,11 +23,11 @@
         <div class="card-header">
           <div class="card-title">
             <h4>Pedido #{{ order.id }}</h4>
-            <span class="status status-{{ order.status | lowercase }}">{{ order.status }}</span>
+            <span class="status status-{{ order.status.toLowerCase().replace(' ', '-') }}">{{ order.status }}</span>
           </div>
           <div class="card-actions">
             <button class="edit-btn" (click)="openEditModal(order)">Editar</button>
-            <button class="delete-btn" (click)="deleteOrder(order.id)">Excluir</button>
+            <button class="delete-btn" (click)="openDeleteConfirmModal(order)">Excluir</button>
           </div>
         </div>
         <div class="card-body">
@@ -33,6 +39,9 @@
             <div class="info-item"><strong>Email:</strong><span>{{ order.customerEmail || 'N/A' }}</span></div>
             <div class="info-item"><strong>Telefone:</strong><span>{{ order.customerPhone || 'N/A' }}</span></div>
             <div class="info-item"><strong>Data:</strong><span>{{ order.orderDate | date:'short' }}</span></div>
+          </div>
+          <div class="card-footer">
+            <button class="receipt-btn" (click)="generateReceipt(order)">Gerar Comprovante</button>
           </div>
         </div>
       </div>
